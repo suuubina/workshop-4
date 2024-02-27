@@ -173,7 +173,6 @@ export async function createRandomSymmetricKey(): Promise<webcrypto.CryptoKey> {
   return key;
 }
 
-}
 
 // Export a crypto symmetric key to a base64 string format
 export async function exportSymKey(key: webcrypto.CryptoKey): Promise<string> {
