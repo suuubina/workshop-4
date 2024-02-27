@@ -15,6 +15,20 @@ export async function user(userId: number) {
   // TODO implement the status route
   // _user.get("/status", (req, res) => {});
 
+    _user.get("/status", (req, res) => {
+    res.send('live')
+
+   });
+
+   _user.get("/getLastReceivedMessage", (req, res) => {
+    res.json({result: lastReceivedMessage})
+   });
+
+   _user.get("/getLastSentMessage", (req, res) => {
+    res.json({ result: lastSentMessage})
+   });
+
+
   const server = _user.listen(BASE_USER_PORT + userId, () => {
     console.log(
       `User ${userId} is listening on port ${BASE_USER_PORT + userId}`
