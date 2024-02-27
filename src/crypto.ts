@@ -30,9 +30,17 @@ export async function generateRsaKeyPair(): Promise<GenerateRsaKeyPair> {
   //      keys are extractable.
 
   // remove this
-  const exportedKey = key.export({ type: "spki", format: "pem" });
-  const base64Key = Buffer.from(exportedKey).toString("base64");
-  return base64Key;
+  const { publicKey, privateKey } = await webcrypto.subtle.generateKey(
+      {
+        name: "RSA-OAEP",
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: { name: "SHA-256" },
+      },
+      true,
+      ["encrypt", "decrypt"]
+  );
+  return { publicKey, privateKey };
 }
 
 // Export a crypto public key to a base64 string format
