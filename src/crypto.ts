@@ -30,10 +30,9 @@ export async function generateRsaKeyPair(): Promise<GenerateRsaKeyPair> {
   //      keys are extractable.
 
   // remove this
-  const exportedKey = await crypto.exportKey("spki", key);
-  const base64Key = exportedKey.toString("base64");
+  const exportedKey = key.export({ type: "spki", format: "pem" });
+  const base64Key = Buffer.from(exportedKey).toString("base64");
   return base64Key;
-  return { publicKey: {} as any, privateKey: {} as any };
 }
 
 // Export a crypto public key to a base64 string format
