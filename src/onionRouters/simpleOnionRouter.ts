@@ -15,21 +15,10 @@ export async function simpleOnionRouter(nodeId: number) {
   let lastMessageDestination: string | null = null;
 
 
-  onionRouter.get('/status', (req, res) => {
-    res.send('live')
-  })
-
-  onionRouter.get("/getLastReceivedEncryptedMessage", (req, res) => {
-    res.json({ result: lastReceivedEncryptedMessage });
+  app.get('/status/', (req, res) => {
+    res.send('live');
   });
 
-  onionRouter.get("/getLastReceivedDecryptedMessage", (req, res) => {
-    res.json({ result: lastReceivedDecryptedMessage });
-  });
-
-  onionRouter.get("/getLastMessageDestination", (req, res) => {
-    res.json({ result: lastMessageDestination });
-  });
 
 
   const server = onionRouter.listen(BASE_ONION_ROUTER_PORT + nodeId, () => {
