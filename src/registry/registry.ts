@@ -14,6 +14,7 @@ export type GetNodeRegistryBody = {
 };
 
 export async function launchRegistry() {
+  let getNodeRegistryBody: GetNodeRegistryBody = { nodes: [] };
   const _registry = express();
   _registry.use(express.json());
   _registry.use(bodyParser.json());
