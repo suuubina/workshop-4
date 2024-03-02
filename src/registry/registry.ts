@@ -26,6 +26,12 @@ export async function launchRegistry() {
         res.send('live')
     });
 
+  _registry.post("/registerNode", (req: Request<RegisterNodeBody>, res: Response) => {
+    const { nodeId, pubKey } = req.body;
+    getNodeRegistryBody.nodes.push({ nodeId, pubKey });
+    res.json({ result: "success" });
+  });
+
   const server = _registry.listen(REGISTRY_PORT, () => {
     console.log(`registry is listening on port ${REGISTRY_PORT}`);
   });
