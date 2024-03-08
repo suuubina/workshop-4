@@ -13,28 +13,29 @@ export type GetNodeRegistryBody = {
   nodes: Node[];
 };
 
+
 export async function launchRegistry() {
-  let getNodeRegistryBody: GetNodeRegistryBody = { nodes: [] };
   const _registry = express();
   _registry.use(express.json());
   _registry.use(bodyParser.json());
 
-  // TODO implement the status route
-  // _registry.get("/status", (req, res) => {});
-
-  
   _registry.get("/status", (req, res) => {
-        res.send('live')
-    });
-
-  _registry.post("/registerNode", (req: Request<RegisterNodeBody>, res: Response) => {
-    const { nodeId, pubKey } = req.body;
-    getNodeRegistryBody.nodes.push({ nodeId, pubKey });
-    res.json({ result: "success" });
+      res.send('live')
   });
 
-  _registry.get("/getNodeRegistry", (req, res) => {
-    res.json(getNodeRegistryBody);
+  let registeredNodes: Node[] = [];
+  _registry.get("/getNodeRegistry", (req: Request, res: Response) => {
+    const nodeRegistry: GetNodeRegistryBody = {
+      nodes: registeredNodes,
+    };
+    res.json(nodeRegistry);
+  });
+  
+  _registry.post("/registerNode", async (req: Request<{}, {}, RegisterNodeBody>, res) => {
+    const { nodeId, pubKey } = req.body;
+    const newNode: Node = { nodeId, pubKey };
+    registeredNodes.push(newNode);
+    res.status(200).send({ message: "Node registered successfully." });  
   });
 
   const server = _registry.listen(REGISTRY_PORT, () => {
