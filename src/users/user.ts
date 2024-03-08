@@ -3,7 +3,6 @@ import express from "express";
 import { BASE_USER_PORT, BASE_ONION_ROUTER_PORT } from "../config";
 import {createRandomSymmetricKey,symEncrypt,rsaEncrypt, exportSymKey} from "../crypto";
 import {GetNodeRegistryBody, Node} from "@/src/registry/registry";
-import axios from "axios";
 
 export type SendMessageBody = {
   message: string;
